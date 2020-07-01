@@ -22,7 +22,7 @@ $(document).ready(function(){
 });
 //Stampa i film s schermo
  function printMovie(movieSearch){
-
+   $('.movie').remove();
    $.ajax(
      {
        url: 'https://api.themoviedb.org/3/search/movie',
@@ -55,7 +55,7 @@ $(document).ready(function(){
             };
            var html = template(context);
            $('.movies-list').append(html);
-            console.log(resData.results);
+
          }
 
 
