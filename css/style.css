@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+}
+li {
+  line-height: 25px;
+  list-style-type: none;
+  font-size: 15px;
+}
+/* SIDEBAR */
+.sidebar {
+  width: 100%;
+  height: 70px;
+  background: black;
+}
+/* Search */
+.search-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+}
+.search-input input {
+  width:100%;
+  height: 30px;
+
+}
+.search-ico i {
+  color: white;
+  padding-left: 10px;
+  font-size: 20px;
+}
+.search {
+  width: 100%;
+  padding: 20px;
+}
+.movies-list {
+  display: flex;
+  width: 1050px;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+.movie {
+  height: 350px;
+  border: 1px solid lightgray;
+  flex-basis: calc( 100% / 5 );
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+
+}

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"  integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.1.2/handlebars.min.js"></script>
+    <script src="https://momentjs.com/downloads/moment.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+    <title>Boolflix</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar">
+        <div class="search">
+          <div class="search-input">
+            <input id="search" type="text" placeholder="Search">
+            <div class="search-ico">
+              <i class="fas fa-search"></i>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <div class="movies-list">
+
+
+
+      </div>
+
+    </div>
+
+
+
+    <script id="movies-template" type="text/x-handlebars-template">
+      <div class="movie">
+        <ul>
+          <li >Titolo: <span class="title">{{title}}</span></li>
+          <li class="original-title">Titolo originale: {{original_title}}</li>
+          <li class="language">Lingua: {{language}}</li>
+          <li class="vote">Voto: {{vote}}</li>
+
+        </ul>
+
+
+
+      </div>
+
+
+    </script>
+    <script type="text/javascript" src="js/script.js">
+    </script>
+  </body>
+</html>
