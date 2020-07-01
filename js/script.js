@@ -15,13 +15,14 @@ $(document).ready(function(){
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
 
-  printMovie(movieSearch);
+  searchMovies(movieSearch);
   // console.log(movieSearch);
 
 
 });
+
 //Stampa i film s schermo
- function printMovie(movieSearch){
+ function searchMovies(movieSearch){
    $('.movie').remove();
    $.ajax(
      {
@@ -35,30 +36,7 @@ $(document).ready(function(){
        success: function(resData){
          var movie = resData.results;
          console.log(movie);
-
-         for (var i = 0; i < movie.length; i++) {
-           var titleMovie = movie[i].title;
-           var voteMovie = movie[i].vote_average;
-           var languageMovie = movie[i].original_language;
-           var originalTitleMovie = movie[i].original_title;
-           console.log(titleMovie)
-           console.log(voteMovie)
-           console.log(originalTitleMovie)
-
-           var source = $("#movies-template").html();
-           var template = Handlebars.compile(source);
-           var context = {
-              title: titleMovie,
-              original_title: originalTitleMovie,
-              language: languageMovie,
-              vote: voteMovie
-            };
-           var html = template(context);
-           $('.movies-list').append(html);
-
-         }
-
-
+         printMovies(movie)
 
        },
        error: function(){
@@ -66,9 +44,31 @@ $(document).ready(function(){
        }
 
 
-
      }
    );
+
+ }
+ function printMovies(movie){
+   for (var i = 0; i < movie.length; i++) {
+     var titleMovie = movie[i].title;
+     var voteMovie = movie[i].vote_average;
+     var languageMovie = movie[i].original_language;
+     var originalTitleMovie = movie[i].original_title;
+     console.log(titleMovie)
+     console.log(voteMovie)
+     console.log(originalTitleMovie)
+     var source = $("#movies-template").html();
+     var template = Handlebars.compile(source);
+     var context = {
+        title: titleMovie,
+        original_title: originalTitleMovie,
+        language: languageMovie,
+        vote: voteMovie
+      };
+     var html = template(context);
+     $('.movies-list').append(html);
+     }
+
 
  }
 

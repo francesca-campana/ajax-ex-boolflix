@@ -51,6 +51,7 @@ li {
   flex-wrap: wrap;
   padding: 20px;
   margin: auto;
+  overflow-x: auto;
 }
 .movie {
   height: 250px;
