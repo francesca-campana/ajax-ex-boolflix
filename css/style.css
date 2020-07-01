@@ -47,16 +47,16 @@ li {
 .movies-list {
   height: calc(100vh - 70px);
   display: flex;
-  width: 1050px;
+  width: 100%;
   flex-wrap: wrap;
   padding: 20px;
-  margin: auto;
   overflow-x: auto;
+  justify-content: center;
 }
 .movie {
-  height: 250px;
+  height: 300px;
   border: 1px solid black;
-  flex-basis: calc( 100% / 5);
+  flex-basis: calc( 100% / 7);
   padding: 12px;
   background: white;
   margin: 10px;
