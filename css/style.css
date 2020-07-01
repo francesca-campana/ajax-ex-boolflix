@@ -14,6 +14,7 @@ li {
 .container {
   width: 100%;
   height: 100vh;
+  background: black;
 
 }
 /* SIDEBAR */
@@ -26,11 +27,11 @@ li {
 .search-input {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;;
 
 }
 .search-input input {
-  width:1050px;
+  width: 200px;
   height: 30px;
 
 }
@@ -44,6 +45,7 @@ li {
   padding: 20px;
 }
 .movies-list {
+  height: calc(100vh - 70px);
   display: flex;
   width: 1050px;
   flex-wrap: wrap;
@@ -51,9 +53,10 @@ li {
   margin: auto;
 }
 .movie {
-  height: 350px;
-  border: 1px solid lightgray;
-  flex-basis: calc( 100% / 5 );
-  padding: 4px;
-
+  height: 250px;
+  border: 1px solid black;
+  flex-basis: calc( 100% / 5);
+  padding: 12px;
+  background: white;
+  margin: 10px;
 }
