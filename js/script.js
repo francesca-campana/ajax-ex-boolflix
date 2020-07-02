@@ -49,6 +49,7 @@ var urlTvShow = 'search/tv';
          var movie = resData.results;
          console.log(movie)
          printMovies(movie, api_url)
+         console.log(printMovies(movie, api_url));
 
        },
        error: function(){
@@ -63,7 +64,7 @@ var urlTvShow = 'search/tv';
 
  // Stampa a schermo attraverso Handlebars i film a schermo
  function printMovies(movie, root){
-   var root = '';
+   var root;
    for (var i = 0; i < movie.length; i++) {
      var titleTvShow = movie[i].name;
      console.log(titleTvShow);
@@ -73,13 +74,17 @@ var urlTvShow = 'search/tv';
      var languageMovie = movie[i].original_language;
      var originalTitleMovie = movie[i].original_title;
      var originalTitleTvShow = movie[i].original_name;
+
      var tipo = movie[i].media_type;
      console.log(tipo)
+     // if (tipo = 'person') {
+     //    tipo ='';
+     // }
 
      var source = $("#movies-template").html();
      var template = Handlebars.compile(source);
 
-     if (root.includes('search/movie')) {
+     if (titleMovie) {
 
        var context = {
           title: titleMovie,
@@ -89,13 +94,13 @@ var urlTvShow = 'search/tv';
           media_type:'movie'
         };
 
-     } else if (root.includes('search/tv')) {
+     } else if (titleTvShow) {
        var context = {
           name:titleTvShow,
           original_title: originalTitleTvShow,
           language: flags(languageMovie),
           vote: stars(voteMovie),
-          media_type:'Tv series'
+          media_type: 'Tv show'
         };
 
      }
