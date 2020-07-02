@@ -20,6 +20,8 @@ $(document).ready(function(){
 var api_url = 'https://api.themoviedb.org/3/search/multi';
 var urlMovies = 'search/movie';
 var urlTvShow = 'search/tv';
+var urlImg = 'https://image.tmdb.org/t/p/';
+var posterSize = 'w154';
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
    // searchSeries(movieSearch);
@@ -46,6 +48,7 @@ var urlTvShow = 'search/tv';
        success: function(resData){
 
          var movie = resData.results;
+
          console.log(movie)
          printMovies(movie)
 
@@ -65,49 +68,69 @@ var urlTvShow = 'search/tv';
  function printMovies(movie){
 
    for (var i = 0; i < movie.length; i++) {
-     var titleTvShow = movie[i].name;
+     var singoloFilm = movie[i];
+     console.log(singoloFilm.name)
+     var titleTvShow = singoloFilm.name;
      console.log(titleTvShow);
-     var titleMovie = movie[i].title;
+     var titleMovie = singoloFilm.title;
      console.log(titleMovie);
-     var voteMovie = movie[i].vote_average;
-     var languageMovie = movie[i].original_language;
-     var originalTitleMovie = movie[i].original_title;
-     var originalTitleTvShow = movie[i].original_name;
-
-     var tipo = movie[i].media_type;
+     var voteMovie = singoloFilm.vote_average;
+     var languageMovie = singoloFilm.original_language;
+     var originalTitleMovie = singoloFilm.original_title;
+     var originalTitleTvShow = singoloFilm.original_name;
+     var posterMovie = movie[i].poster_path;
+     console.log(posterMovie)
+     var tipo = singoloFilm.media_type;
      console.log(tipo)
-     // if (tipo = 'person') {
-     //    tipo ='';
-     // }
+
 
      var source = $("#movies-template").html();
      var template = Handlebars.compile(source);
 
-     if (titleMovie) {
+     if (tipo != 'person') {
 
        var context = {
+         poster_path: posterize(posterMovie),
           title: titleMovie,
-          original_title: originalTitleMovie,
+          original_title: originalTitleMovie ,
           language: flags(languageMovie),
           vote: stars(voteMovie),
-          media_type:'movie'
+          media_type:'Movie'
         };
+        console.log(context);
 
-     } else if (titleTvShow) {
+
+
+     } else {
        var context = {
+          poster_path: posterize(posterMovie),
           name:titleTvShow,
-          original_title: originalTitleTvShow,
-          language: flags(languageMovie),
-          vote: stars(voteMovie),
+          original_title_name: originalTitleTvShow,
+          language_name: flags(languageMovie),
+          vote_name: stars(voteMovie),
           media_type: 'Tv show'
         };
-
+        console.log(context);
      }
+
      var html = template(context);
      $('.movies-list').append(html);
-
    }
 
+ }
+ //Funzione di inserimento path img
+// Come argomento accetta la chiave relativa al poster_path
+// se è vuota restituisce l'immagine relativa al film o serie tv
+// se è vuota andremo noi a suggerirle un img di 'not-found'
+// return: poster
+ function posterize(path){
+   var poster = '';
+   if (path == null) {
+     poster = 'img/no_image_found.png';
+   }else {
+     poster = urlImg + posterSize + path;
+   }
+   return poster;
  }
  function reset(){
    $('.movie').remove();
@@ -159,7 +182,7 @@ var urlTvShow = 'search/tv';
       flags = 'img/germany-flag-xs.png';
         break;
 
-      default: flags = country;
+      default: flags = '';
 
     }
     return flags;

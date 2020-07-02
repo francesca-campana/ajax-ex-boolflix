@@ -51,16 +51,24 @@ li {
   flex-wrap: wrap;
   padding: 10px;
   overflow-x: auto;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .movie {
-  height: 300px;
+  /* height: 300px; */
   border: 1px solid black;
   flex-basis: calc( 100% / 6);
-  padding: 12px;
+  /* padding: 12px; */
   background: white;
-  margin: 10px;
+  /* margin: 10px; */
+  text-align: center;
 }
+.poster {
+  width: 100%;
+}
+.vote i{
+  color: #ffc200;
+}
+
 .flag {
   width: 20px;
 }

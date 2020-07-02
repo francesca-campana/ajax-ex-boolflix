@@ -27,8 +27,6 @@
       <div class="movies-list">
 
 
-
-
       </div>
 
     </div>
@@ -37,15 +35,13 @@
 
     <script id="movies-template" type="text/x-handlebars-template">
       <div class="movie">
-        <h2 class="title">Titolo: {{title}} {{name}}</h2>
-
+        <img class="poster"src="{{poster_path}}" alt="Poster movie">
+        <h2 class="title">{{title}} {{name}}</h2>
         <ul>
-
-          <li class="original-title">Titolo originale: {{original_title}}</li>
-          <li class="language">Lingua: <img class="flag" src="{{language}}" alt=""></li>
-          <li class="vote">Voto: {{{vote}}}</li>
-          <li class="tipo">Tipo: {{{media_type}}}</li>
-
+          <li class="original-title"> <strong>Titolo originale:</strong> {{original_title}} {{original_title_name}}</li>
+          <li class="language"><strong>Lingua:</strong> <img class="flag" src="{{language}} {{language_name}}" alt=""></li>
+          <li class="vote"><strong>Voto:</strong> {{{vote}}} {{{vote_name}}}</li>
+          <li class="tipo"><strong>Tipo:</strong> {{{media_type}}} </li>
         </ul>
 
 
