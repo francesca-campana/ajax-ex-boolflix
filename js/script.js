@@ -87,32 +87,21 @@ var posterSize = 'w154';
      var source = $("#movies-template").html();
      var template = Handlebars.compile(source);
 
-     if (tipo != 'person') {
-
+     if (singoloFilm.media_type !== 'person') {
+       // movies
        var context = {
          poster_path: posterize(posterMovie),
           title: titleMovie,
           original_title: originalTitleMovie ,
           language: flags(languageMovie),
           vote: stars(voteMovie),
-          media_type:'Movie'
-        };
-        console.log(context);
-
-
-
-     } else {
-       var context = {
-          poster_path: posterize(posterMovie),
+       // tv series
           name:titleTvShow,
           original_title_name: originalTitleTvShow,
-          language_name: flags(languageMovie),
-          vote_name: stars(voteMovie),
-          media_type: 'Tv show'
+          media_type: singoloFilm.media_type
         };
-        console.log(context);
-     }
 
+     }
      var html = template(context);
      $('.movies-list').append(html);
    }
