@@ -18,7 +18,6 @@ $(document).ready(function(){
   //chiave API
 //2669fd071d162f6f2bafb9c16dee98ad
 var api_url = 'https://api.themoviedb.org/3/search/multi';
-var api_url_root = '';
 var urlMovies = 'search/movie';
 var urlTvShow = 'search/tv';
   $('.search-ico').click(function(){
@@ -48,8 +47,8 @@ var urlTvShow = 'search/tv';
 
          var movie = resData.results;
          console.log(movie)
-         printMovies(movie, api_url)
-         console.log(printMovies(movie, api_url));
+         printMovies(movie)
+
 
        },
        error: function(){
@@ -63,8 +62,8 @@ var urlTvShow = 'search/tv';
  }
 
  // Stampa a schermo attraverso Handlebars i film a schermo
- function printMovies(movie, root){
-   var root;
+ function printMovies(movie){
+
    for (var i = 0; i < movie.length; i++) {
      var titleTvShow = movie[i].name;
      console.log(titleTvShow);
