@@ -17,21 +17,27 @@
 $(document).ready(function(){
   //chiave API
 //2669fd071d162f6f2bafb9c16dee98ad
+var api_url = 'https://api.themoviedb.org/3/search/multi';
+var api_url_root = '';
+var urlMovies = 'search/movie';
+var urlTvShow = 'search/tv';
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
-
+   // searchSeries(movieSearch);
   searchMovies(movieSearch);
   // console.log(movieSearch);
 
 
 });
 
-//Stampa i film a schermo
+// Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
+// immesso nella Input
+// return: non ritorna niente
  function searchMovies(valInput){
    reset();
    $.ajax(
      {
-       url: 'https://api.themoviedb.org/3/search/movie',
+       url: api_url,
        method: 'GET',
        data: {
          api_key:'2669fd071d162f6f2bafb9c16dee98ad',
@@ -39,9 +45,10 @@ $(document).ready(function(){
          language:'it-IT'
        },
        success: function(resData){
-         var movie = resData.results;
 
-         printMovies(movie)
+         var movie = resData.results;
+         console.log(movie)
+         printMovies(movie, api_url)
 
        },
        error: function(){
@@ -53,25 +60,49 @@ $(document).ready(function(){
    );
 
  }
- function printMovies(movie){
+
+ // Stampa a schermo attraverso Handlebars i film a schermo
+ function printMovies(movie, root){
+   var root = '';
    for (var i = 0; i < movie.length; i++) {
+     var titleTvShow = movie[i].name;
+     console.log(titleTvShow);
      var titleMovie = movie[i].title;
+     console.log(titleMovie);
      var voteMovie = movie[i].vote_average;
      var languageMovie = movie[i].original_language;
      var originalTitleMovie = movie[i].original_title;
+     var originalTitleTvShow = movie[i].original_name;
+     var tipo = movie[i].media_type;
+     console.log(tipo)
 
      var source = $("#movies-template").html();
      var template = Handlebars.compile(source);
-     var context = {
-        title: titleMovie,
-        original_title: originalTitleMovie,
-        language: flags(languageMovie),
-        vote: stars(voteMovie)
-      };
+
+     if (root.includes('search/movie')) {
+
+       var context = {
+          title: titleMovie,
+          original_title: originalTitleMovie,
+          language: flags(languageMovie),
+          vote: stars(voteMovie),
+          media_type:'movie'
+        };
+
+     } else if (root.includes('search/tv')) {
+       var context = {
+          name:titleTvShow,
+          original_title: originalTitleTvShow,
+          language: flags(languageMovie),
+          vote: stars(voteMovie),
+          media_type:'Tv series'
+        };
+
+     }
      var html = template(context);
      $('.movies-list').append(html);
-     }
 
+   }
 
  }
  function reset(){
@@ -80,7 +111,7 @@ $(document).ready(function(){
  // Trasforma il voto da 1 a 10 decimale in un numero intero da 1 a 5,
  // così da permetterci di stampare a schermo un numero di stelle piene
  // che vanno da 1 a 5, lasciando le restanti vuote
- //return le stelle
+ // return: stars
  function stars(rating) {
     var vote = Math.floor(rating / 2);
     var stars = '';
@@ -93,6 +124,10 @@ $(document).ready(function(){
     }
     return stars;
   }
+  // Assegna img di bandierina a seconda dell'original language del film selezionato
+  // raffronta country con la stringa  ritornata dalla chiamata ajax di
+  // original_language e ne assegna la bandierina corrispondente
+  // return: flag
   function flags(country){
   var flags = '';
 
@@ -115,6 +150,9 @@ $(document).ready(function(){
 
       case  'es':
       flags = 'img/spain-flag-xs.png';
+        break;
+      case  'de':
+      flags = 'img/germany-flag-xs.png';
         break;
 
       default: flags = country;
