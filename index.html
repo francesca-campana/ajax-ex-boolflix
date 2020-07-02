@@ -28,6 +28,7 @@
 
 
 
+
       </div>
 
     </div>
@@ -36,11 +37,12 @@
 
     <script id="movies-template" type="text/x-handlebars-template">
       <div class="movie">
+        <h2 class="title">Titolo: {{title}}</h2>
         <ul>
-          <li >Titolo: <span class="title">{{title}}</span></li>
+
           <li class="original-title">Titolo originale: {{original_title}}</li>
-          <li class="language">Lingua: {{language}}</li>
-          <li class="vote">Voto: {{vote}}</li>
+          <li class="language">Lingua: <img class="flag" src="{{language}}" alt=""> </li>
+          <li class="vote">Voto: {{{vote}}}</li>
 
         </ul>
 

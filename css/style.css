@@ -49,15 +49,18 @@ li {
   display: flex;
   width: 100%;
   flex-wrap: wrap;
-  padding: 20px;
+  padding: 10px;
   overflow-x: auto;
-  justify-content: center;
+  justify-content: space-between;
 }
 .movie {
   height: 300px;
   border: 1px solid black;
-  flex-basis: calc( 100% / 7);
+  flex-basis: calc( 100% / 6);
   padding: 12px;
   background: white;
   margin: 10px;
+}
+.flag {
+  width: 20px;
 }
