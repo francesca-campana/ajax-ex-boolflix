@@ -14,6 +14,9 @@
   <body>
     <div class="container">
       <div class="sidebar">
+        <div class="logo">
+          <img src="img/boolflx-logo.png" alt="Logo Boolflix">
+        </div>
         <div class="search">
           <div class="search-input">
             <input id="search" type="text" placeholder="Search">
@@ -26,7 +29,6 @@
       </div>
       <div class="movies-list">
 
-
       </div>
 
     </div>
@@ -34,17 +36,22 @@
 
 
     <script id="movies-template" type="text/x-handlebars-template">
-      <div class="movie">
-        <img class="poster"src="{{poster_path}}" alt="Poster movie">
-        <h2 class="title">{{title}} {{name}}</h2>
-        <ul>
-          <li class="original-title"> <strong>Titolo originale:</strong> {{original_title}} {{original_title_name}}</li>
-          <li class="language"><strong>Lingua:</strong> <img class="flag" src="{{language}} {{language_name}}" alt=""></li>
-          <li class="vote"><strong>Voto:</strong> {{{vote}}}</li>
-          <li class="tipo"><strong>Tipo:</strong> {{media_type}} </li>
-        </ul>
-
-
+      <div id="movie" class="movie">
+        <div class="movie-inner">
+          <div class="front-card">
+            <img class="poster"src="{{poster_path}}" alt="Poster movie">
+          </div>
+          <div class="back-card">
+            <h2 class="title">{{title}} {{name}}</h2>
+            <ul>
+              <li class="original-title"> <strong>Titolo originale:</strong> {{original_title}} {{original_title_name}}</li>
+              <li class="language"><strong>Lingua:</strong> {{{language}}}</li>
+              <li class="vote"><strong>Voto:</strong> {{{vote}}}</li>
+              <li class="tipo"><strong>Tipo:</strong> {{media_type}} </li>
+              <li class="overview"><strong>Sinossi:</strong> {{overview}} </li>
+            </ul>
+          </div>
+        </div>
 
       </div>
 

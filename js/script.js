@@ -1,19 +1,3 @@
-// Milestone 2
-// Trasformiamo il voto da 1 a 10 decimale in un numero intero da 1 a 5,
-// così da permetterci di stampare a schermo un numero di stelle piene
-// che vanno da 1 a 5, lasciando le restanti vuote (troviamo le icone in FontAwesome).
-// Arrotondiamo sempre per eccesso all’unità successiva, non gestiamo icone mezze piene
-// (o mezze vuote :P)
-// Trasformiamo poi la stringa statica della lingua in una vera e propria bandiera
-// della nazione corrispondente, gestendo il caso in cui non abbiamo la bandiera
-// della nazione ritornata dall’API (le flag non ci sono in FontAwesome).
-//
-// Allarghiamo poi la ricerca anche alle serie tv.
-// Con la stessa azione di ricerca dovremo prendere sia i film che corrispondono alla query,
-// sia le serie tv, stando attenti ad avere alla fine dei valori simili
-// (le serie e i film hanno campi nel JSON di risposta diversi, simili ma non sempre identici)
-
-
 $(document).ready(function(){
   //chiave API
 //2669fd071d162f6f2bafb9c16dee98ad
@@ -21,7 +5,8 @@ var api_url = 'https://api.themoviedb.org/3/search/multi';
 var urlMovies = 'search/movie';
 var urlTvShow = 'search/tv';
 var urlImg = 'https://image.tmdb.org/t/p/';
-var posterSize = 'w154';
+var posterSize = 'w342';
+
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
    // searchSeries(movieSearch);
@@ -30,6 +15,7 @@ var posterSize = 'w154';
 
 
 });
+  $('#movie').mouse
 
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
 // immesso nella Input
@@ -81,6 +67,7 @@ var posterSize = 'w154';
      var posterMovie = movie[i].poster_path;
      console.log(posterMovie)
      var tipo = singoloFilm.media_type;
+     var overview = singoloFilm.overview;
      console.log(tipo)
 
 
@@ -95,6 +82,7 @@ var posterSize = 'w154';
           original_title: originalTitleMovie ,
           language: flags(languageMovie),
           vote: stars(voteMovie),
+          overview: singoloFilm.overview,
        // tv series
           name:titleTvShow,
           original_title_name: originalTitleTvShow,
@@ -129,7 +117,7 @@ var posterSize = 'w154';
  // che vanno da 1 a 5, lasciando le restanti vuote
  // return: stars
  function stars(rating) {
-    var vote = Math.floor(rating / 2);
+    var vote = Math.ceil(rating / 2);
     var stars = '';
     for (var i = 1; i <= 5; i++) {
         if (i <= vote) {
@@ -149,29 +137,29 @@ var posterSize = 'w154';
 
     switch (country) {
       case  'it':
-      flags = 'img/italy-flag-xs.png';
+      flags = '<img src= "img/italy-flag-xs.png ">';
         break;
 
       case  'en':
-      flags = 'img/united-kingdom-flag-xs.png';
+      flags = '<img src= "img/united-kingdom-flag-xs.png">';
         break;
 
       case  'fr':
-      flags = 'img/france-flag-xs.png';
+      flags = '<img src= "img/france-flag-xs.png">';
         break;
 
       case  'ja':
-      flags = 'img/japan-flag-xs.png';
+      flags = '<img src= "img/japan-flag-xs.png">';
         break;
 
       case  'es':
-      flags = 'img/spain-flag-xs.png';
+      flags = '<img src= "img/spain-flag-xs.png">';
         break;
       case  'de':
-      flags = 'img/germany-flag-xs.png';
+      flags = '<img src= "img/germany-flag-xs.png">';
         break;
 
-      default: flags = '';
+      default: flags = country;
 
     }
     return flags;
