@@ -1,27 +1,30 @@
 $(document).ready(function(){
   //chiave API
 //2669fd071d162f6f2bafb9c16dee98ad
-var api_url = 'https://api.themoviedb.org/3/search/multi';
-var urlMovies = 'search/movie';
-var urlTvShow = 'search/tv';
 var urlImg = 'https://image.tmdb.org/t/p/';
 var posterSize = 'w342';
 
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
    // searchSeries(movieSearch);
-  searchMovies(movieSearch);
+  searchMovies(movieSearch, 'movie');
+  searchMovies(movieSearch, 'tv');
   // console.log(movieSearch);
 
+  });
 
-});
-  $('#movie').mouse
 
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
-// immesso nella Input
+// immesso nella Input e al tipo di ricerca da effettuare se 'movies' o 'tv'
+// argomento: valInput, type
 // return: non ritorna niente
- function searchMovies(valInput){
+ function searchMovies(valInput, type){
    reset();
+   if (type === 'movies') {
+     var api_url = 'https://api.themoviedb.org/3/search/movie'
+   }else {
+     var api_url = 'https://api.themoviedb.org/3/search/tv'
+   }
    $.ajax(
      {
        url: api_url,
@@ -34,10 +37,7 @@ var posterSize = 'w342';
        success: function(resData){
 
          var movie = resData.results;
-
-         console.log(movie)
-         printMovies(movie)
-
+         printMovies(movie, type);
 
        },
        error: function(){
@@ -50,46 +50,44 @@ var posterSize = 'w342';
 
  }
 
- // Stampa a schermo attraverso Handlebars i film a schermo
- function printMovies(movie){
+ // Stampa a schermo attraverso Handlebars i film e le serie tv
+ // in base al dato ritonato dalla chiamata ajax e dal tipo di ricerca da effettuare se in 'movies' o in 'tv'
+ // argomento: argomento: valInput, type
+ // return: non ritorna nulla
+ function printMovies(movie, type){
 
    for (var i = 0; i < movie.length; i++) {
      var singoloFilm = movie[i];
-     console.log(singoloFilm.name)
-     var titleTvShow = singoloFilm.name;
-     console.log(titleTvShow);
-     var titleMovie = singoloFilm.title;
-     console.log(titleMovie);
+     console.log(singoloFilm);
+
      var voteMovie = singoloFilm.vote_average;
      var languageMovie = singoloFilm.original_language;
-     var originalTitleMovie = singoloFilm.original_title;
-     var originalTitleTvShow = singoloFilm.original_name;
-     var posterMovie = movie[i].poster_path;
-     console.log(posterMovie)
-     var tipo = singoloFilm.media_type;
+     var posterMovie = singoloFilm.poster_path;
      var overview = singoloFilm.overview;
-     console.log(tipo)
+     // var type = type;
+
 
 
      var source = $("#movies-template").html();
      var template = Handlebars.compile(source);
 
-     if (singoloFilm.media_type !== 'person') {
-       // movies
-       var context = {
-         poster_path: posterize(posterMovie),
-          title: titleMovie,
-          original_title: originalTitleMovie ,
-          language: flags(languageMovie),
-          vote: stars(voteMovie),
-          overview: singoloFilm.overview,
-       // tv series
-          name:titleTvShow,
-          original_title_name: originalTitleTvShow,
-          media_type: singoloFilm.media_type
-        };
+     if (type === 'movies') {
+       var title = singoloFilm.title;
+       var originalTitle = singoloFilm.original_title;
 
+     }else {
+       var title = singoloFilm.name;
+       var originalTitle = singoloFilm.original_name;
      }
+     var context = {
+       poster_path: posterize(posterMovie),
+        title: title,
+        original_title: originalTitle,
+        language: flags(languageMovie),
+        vote: stars(voteMovie),
+        overview: overview,
+        type: type
+      };
      var html = template(context);
      $('.movies-list').append(html);
    }
@@ -128,40 +126,19 @@ var posterSize = 'w342';
     }
     return stars;
   }
-  // Assegna img di bandierina a seconda dell'original language del film selezionato
-  // raffronta country con la stringa  ritornata dalla chiamata ajax di
-  // original_language e ne assegna la bandierina corrispondente
-  // return: flag
+  // Ho assegnato alle img delle bandiere lo stesso nome del codice language ritornata dalla chiamata ajax
+  // faccio un controllo se all'interno della lista  delle bandiere è contenuto il codice language
+  // se c'è corrispondenza ritorna l'img della bandierina
+  // altrimenti ritorna il codice lingua come testo
+  // return: flags
   function flags(country){
-  var flags = '';
-
-    switch (country) {
-      case  'it':
-      flags = '<img src= "img/italy-flag-xs.png ">';
-        break;
-
-      case  'en':
-      flags = '<img src= "img/united-kingdom-flag-xs.png">';
-        break;
-
-      case  'fr':
-      flags = '<img src= "img/france-flag-xs.png">';
-        break;
-
-      case  'ja':
-      flags = '<img src= "img/japan-flag-xs.png">';
-        break;
-
-      case  'es':
-      flags = '<img src= "img/spain-flag-xs.png">';
-        break;
-      case  'de':
-      flags = '<img src= "img/germany-flag-xs.png">';
-        break;
-
-      default: flags = country;
-
-    }
+  var flagsArray = ['it', 'en', 'fr', 'ja', 'es', 'de'];
+  var flags;
+  if (flagsArray.includes(country)) {
+    flags = '<img src= "img/' + country + '.png">';
+  }else {
+    flags = country;
+  }
     return flags;
   }
 
