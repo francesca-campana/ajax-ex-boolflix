@@ -7,8 +7,8 @@ var posterSize = 'w342';
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
 
-   // $('.sfondo').addClass('active');
-
+    $('.sfondo').addClass('active');
+    $('.logo').addClass('visible');
    // searchSeries(movieSearch);
   searchData(movieSearch, 'movies');
   searchData(movieSearch, 'tv');
