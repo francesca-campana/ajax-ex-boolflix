@@ -16,12 +16,24 @@ var posterSize = 'w342';
 
   });
 
+function errorPrintMsg (message){
+  $('.error-message').text('');
+  var source = $("#error-template").html();
+  var template = Handlebars.compile(source);
 
+  var context = {
+    message : message
+  };
+  var html = template(context);
+  $('.error-message').append(html);
+
+}
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
 // immesso nella Input e al tipo di ricerca da effettuare se 'movies' o 'tv'
 // argomento: valInput, type
 // return: non ritorna niente
  function searchData(valInput, type){
+   var api_key = '2669fd071d162f6f2bafb9c16dee98ad';
    reset();
    if (type === 'movies') {
      var api_url = 'https://api.themoviedb.org/3/search/movie'
@@ -33,18 +45,31 @@ var posterSize = 'w342';
        url: api_url,
        method: 'GET',
        data: {
-         api_key:'2669fd071d162f6f2bafb9c16dee98ad',
+         api_key: api_key,
          query: valInput,
          language:'it-IT'
        },
        success: function(resData){
 
          var movie = resData.results;
-         print(movie, type);
+         if (movie.length > 0) {
+           print(movie, type);
+
+         }else {
+           if (type === 'movies') {
+             var errorMsg = 'La tua ricerca non ha prodotto risultati tra i film'
+
+           }else {
+             var errorMsg = 'La tua ricerca non ha prodotto risultati tra le serie TV';
+             errorPrintMsg (errorMsg);
+           }
+         }
+
 
        },
        error: function(){
-         alert('Errore');
+         var errorMsg = 'Errore! Forse non hai inserito alcuna parola chiave nella ricerca'
+         errorPrintMsg (errorMsg);
        }
 
 
