@@ -6,9 +6,12 @@ var posterSize = 'w342';
 
   $('.search-ico').click(function(){
    var movieSearch = $('#search').val();
+
+   // $('.sfondo').addClass('active');
+
    // searchSeries(movieSearch);
-  searchMovies(movieSearch, 'movie');
-  searchMovies(movieSearch, 'tv');
+  searchData(movieSearch, 'movies');
+  searchData(movieSearch, 'tv');
   // console.log(movieSearch);
 
   });
@@ -18,7 +21,7 @@ var posterSize = 'w342';
 // immesso nella Input e al tipo di ricerca da effettuare se 'movies' o 'tv'
 // argomento: valInput, type
 // return: non ritorna niente
- function searchMovies(valInput, type){
+ function searchData(valInput, type){
    reset();
    if (type === 'movies') {
      var api_url = 'https://api.themoviedb.org/3/search/movie'
@@ -37,7 +40,7 @@ var posterSize = 'w342';
        success: function(resData){
 
          var movie = resData.results;
-         printMovies(movie, type);
+         print(movie, type);
 
        },
        error: function(){
@@ -54,7 +57,7 @@ var posterSize = 'w342';
  // in base al dato ritonato dalla chiamata ajax e dal tipo di ricerca da effettuare se in 'movies' o in 'tv'
  // argomento: argomento: valInput, type
  // return: non ritorna nulla
- function printMovies(movie, type){
+ function print(movie, type){
 
    for (var i = 0; i < movie.length; i++) {
      var singoloFilm = movie[i];
@@ -90,6 +93,7 @@ var posterSize = 'w342';
       };
      var html = template(context);
      $('.movies-list').append(html);
+     console.log(html)
    }
 
  }
@@ -109,6 +113,7 @@ var posterSize = 'w342';
  }
  function reset(){
    $('.movie').remove();
+
  }
  // Trasforma il voto da 1 a 10 decimale in un numero intero da 1 a 5,
  // così da permetterci di stampare a schermo un numero di stelle piene
