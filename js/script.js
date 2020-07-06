@@ -37,6 +37,7 @@ function DataGenres (type, id){
   }else {
     var url = 'https://api.themoviedb.org/3/tv/' + id;
   }
+
   $.ajax(
     {
       url: url,
@@ -47,45 +48,33 @@ function DataGenres (type, id){
       success: function(resdata){
         var gender = resdata.genres;
         console.log(gender)
-        var i = 0
-        while (i < gender.length) {
-          var dataGenres = gender[i];
-          console.log(dataGenres)
 
-          var genres_name = dataGenres.name;
-          var genereSingolo = [];
-          genereSingolo.push(genres_name);
 
-          console.log(genereSingolo)
-          
+        for (var i = 0; i < gender.length; i++) {
 
-          i++
+          var filmGenres = gender[i];
+          console.log(filmGenres.name);
 
-        }
 
-        // for (var i = 0; i < gender.length; i++) {
-        //
-        //   var filmGenres = gender[i];
-        //   console.log(filmGenres)
-        //
-        //   var genere = [''];
-        //   var filmGenres_name = filmGenres.name;
-        //   genere.push(filmGenres_name);
-        //
-        //   console.log(genere)
-        //
-        //
-        //
-        // }
+          // for (var key in filmGenres) {
+          //   console.log(filmGenres[key][2])
+          // }
+
+
+          var filmGenres_name = filmGenres.name;
+
+
+
+
         var source = $("#genre-template").html();
         var template = Handlebars.compile(source);
         var context = {
-          genre: 'genere'
+          genre: filmGenres_name
         };
         var html = template(context);
         console.log(context)
         $('.list').append(html);
-
+        }
       },
       error: function(){
         alert( 'error');
@@ -122,6 +111,7 @@ function DataGenres (type, id){
        success: function(resData){
 
          var movie = resData.results;
+         console.log(movie);
 
          if (movie.length > 0) {
            print(movie, type);
@@ -130,7 +120,6 @@ function DataGenres (type, id){
              var id = movie[i]
              console.log(id.id)
              DataGenres(type, id.id);
-
 
            }
 
@@ -168,6 +157,7 @@ function DataGenres (type, id){
 
 
 
+
      var voteMovie = singoloFilm.vote_average;
      var languageMovie = singoloFilm.original_language;
      var posterMovie = singoloFilm.poster_path;
@@ -195,10 +185,21 @@ function DataGenres (type, id){
         language: flags(languageMovie),
         vote: stars(voteMovie),
         overview: overview,
+        genre:   DataGenres(type, singoloFilm.id),
         type: type
       };
      var html = template(context);
      $('.movies-list').append(html);
+
+     // ///
+     // var source = $("#genre-template").html();
+     // var template = Handlebars.compile(source);
+     // var genere = {
+     //   genre:   DataGenres(type, singoloFilm.id)
+     // };
+     // var html = template(genere);
+     //
+     // $('.list').append(html);
 
    }
 
