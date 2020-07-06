@@ -28,6 +28,76 @@ function errorPrintMsg (message){
   $('.error-message').append(html);
 
 }
+function DataGenres (type, id){
+  var api_key = '2669fd071d162f6f2bafb9c16dee98ad';
+  // var genres_name;
+  if (type === 'movies') {
+    var url = 'https://api.themoviedb.org/3/movie/' + id;
+
+  }else {
+    var url = 'https://api.themoviedb.org/3/tv/' + id;
+  }
+  $.ajax(
+    {
+      url: url,
+      method: 'GET',
+      data: {
+        api_key: api_key,
+      },
+      success: function(resdata){
+        var gender = resdata.genres;
+        console.log(gender)
+        var i = 0
+        while (i < gender.length) {
+          var dataGenres = gender[i];
+          console.log(dataGenres)
+
+          var genres_name = dataGenres.name;
+          var genereSingolo = [];
+          genereSingolo.push(genres_name);
+
+          console.log(genereSingolo)
+          
+
+          i++
+
+        }
+
+        // for (var i = 0; i < gender.length; i++) {
+        //
+        //   var filmGenres = gender[i];
+        //   console.log(filmGenres)
+        //
+        //   var genere = [''];
+        //   var filmGenres_name = filmGenres.name;
+        //   genere.push(filmGenres_name);
+        //
+        //   console.log(genere)
+        //
+        //
+        //
+        // }
+        var source = $("#genre-template").html();
+        var template = Handlebars.compile(source);
+        var context = {
+          genre: 'genere'
+        };
+        var html = template(context);
+        console.log(context)
+        $('.list').append(html);
+
+      },
+      error: function(){
+        alert( 'error');
+      }
+
+    }
+  );
+
+
+
+
+}
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
 // immesso nella Input e al tipo di ricerca da effettuare se 'movies' o 'tv'
 // argomento: valInput, type
@@ -52,8 +122,17 @@ function errorPrintMsg (message){
        success: function(resData){
 
          var movie = resData.results;
+
          if (movie.length > 0) {
            print(movie, type);
+
+           for (var i = 0; i < movie.length; i++) {
+             var id = movie[i]
+             console.log(id.id)
+             DataGenres(type, id.id);
+
+
+           }
 
          }else {
            if (type === 'movies') {
@@ -86,12 +165,14 @@ function errorPrintMsg (message){
 
    for (var i = 0; i < movie.length; i++) {
      var singoloFilm = movie[i];
-     console.log(singoloFilm);
+
+
 
      var voteMovie = singoloFilm.vote_average;
      var languageMovie = singoloFilm.original_language;
      var posterMovie = singoloFilm.poster_path;
      var overview = singoloFilm.overview;
+     var id = singoloFilm.id;
      // var type = type;
 
 
@@ -118,7 +199,7 @@ function errorPrintMsg (message){
       };
      var html = template(context);
      $('.movies-list').append(html);
-     console.log(html)
+
    }
 
  }
