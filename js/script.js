@@ -5,6 +5,7 @@ var urlImg = 'https://image.tmdb.org/t/p/';
 var posterSize = 'w342';
 
   $('.search-ico').click(function(){
+    reset();
    var movieSearch = $('#search').val();
 
     $('.sfondo').addClass('active');
@@ -15,18 +16,7 @@ var posterSize = 'w342';
 
     });
 
-function errorPrintMsg (message){
-  $('.error-message').text('');
-  var source = $("#error-template").html();
-  var template = Handlebars.compile(source);
 
-  var context = {
-    message : message
-  };
-  var html = template(context);
-  $('.error-message').append(html);
-
-}
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
 // immesso nella Input e al tipo di ricerca da effettuare se 'movies' o 'tv'
 // argomento: valInput, type
@@ -63,8 +53,9 @@ function errorPrintMsg (message){
 
            }else {
              var errorMsg = 'La tua ricerca non ha prodotto risultati tra le serie TV';
-             errorPrintMsg (errorMsg);
+
            }
+           errorPrintMsg (errorMsg);
          }
 
 
@@ -77,6 +68,18 @@ function errorPrintMsg (message){
 
      }
    );
+
+ }
+ function errorPrintMsg (message){
+   //$('.error-message').remove();
+   var source = $("#error-template").html();
+   var template = Handlebars.compile(source);
+
+   var context = {
+     message : message
+   };
+   var html = template(context);
+   $('.error-message').append(html);
 
  }
 
@@ -210,7 +213,7 @@ function errorPrintMsg (message){
  }
  function reset(){
    $('.movie').remove();
-
+   $('.messageError').remove();
  }
  // Trasforma il voto da 1 a 10 decimale in un numero intero da 1 a 5,
  // così da permetterci di stampare a schermo un numero di stelle piene
