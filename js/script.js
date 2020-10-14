@@ -12,9 +12,8 @@ var posterSize = 'w342';
    // searchSeries(movieSearch);
   searchData(movieSearch, 'movies');
   searchData(movieSearch, 'tv');
-  // console.log(movieSearch);
 
-  });
+    });
 
 function errorPrintMsg (message){
   $('.error-message').text('');
@@ -26,65 +25,6 @@ function errorPrintMsg (message){
   };
   var html = template(context);
   $('.error-message').append(html);
-
-}
-function DataGenres (type, id){
-  var api_key = '2669fd071d162f6f2bafb9c16dee98ad';
-  // var genres_name;
-  if (type === 'movies') {
-    var url = 'https://api.themoviedb.org/3/movie/' + id;
-
-  }else {
-    var url = 'https://api.themoviedb.org/3/tv/' + id;
-  }
-
-  $.ajax(
-    {
-      url: url,
-      method: 'GET',
-      data: {
-        api_key: api_key,
-      },
-      success: function(resdata){
-        var gender = resdata.genres;
-        console.log(gender)
-
-
-        for (var i = 0; i < gender.length; i++) {
-
-          var filmGenres = gender[i];
-          console.log(filmGenres.name);
-
-
-          // for (var key in filmGenres) {
-          //   console.log(filmGenres[key][2])
-          // }
-
-
-          var filmGenres_name = filmGenres.name;
-
-
-
-
-        var source = $("#genre-template").html();
-        var template = Handlebars.compile(source);
-        var context = {
-          genre: filmGenres_name
-        };
-        var html = template(context);
-        console.log(context)
-        $('.list').append(html);
-        }
-      },
-      error: function(){
-        alert( 'error');
-      }
-
-    }
-  );
-
-
-
 
 }
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
@@ -111,17 +51,11 @@ function DataGenres (type, id){
        success: function(resData){
 
          var movie = resData.results;
-         console.log(movie);
 
          if (movie.length > 0) {
            print(movie, type);
 
-           for (var i = 0; i < movie.length; i++) {
-             var id = movie[i]
-             console.log(id.id)
-             DataGenres(type, id.id);
-
-           }
+           // printGenres(valInput, resData.results, type);
 
          }else {
            if (type === 'movies') {
@@ -155,9 +89,6 @@ function DataGenres (type, id){
    for (var i = 0; i < movie.length; i++) {
      var singoloFilm = movie[i];
 
-
-
-
      var voteMovie = singoloFilm.vote_average;
      var languageMovie = singoloFilm.original_language;
      var posterMovie = singoloFilm.poster_path;
@@ -165,18 +96,19 @@ function DataGenres (type, id){
      var id = singoloFilm.id;
      // var type = type;
 
-
+     var originalTitle;
+     var title;
 
      var source = $("#movies-template").html();
      var template = Handlebars.compile(source);
 
      if (type === 'movies') {
-       var title = singoloFilm.title;
-       var originalTitle = singoloFilm.original_title;
+       title = singoloFilm.title;
+       originalTitle = singoloFilm.original_title;
 
      }else {
-       var title = singoloFilm.name;
-       var originalTitle = singoloFilm.original_name;
+       title = singoloFilm.name;
+       originalTitle = singoloFilm.original_name;
      }
      var context = {
        poster_path: posterize(posterMovie),
@@ -185,25 +117,83 @@ function DataGenres (type, id){
         language: flags(languageMovie),
         vote: stars(voteMovie),
         overview: overview,
-        genre:   DataGenres(type, singoloFilm.id),
-        type: type
+        type: type,
+        // genre: printGenres( movieSearch, movie, type)
       };
+
      var html = template(context);
      $('.movies-list').append(html);
 
-     // ///
-     // var source = $("#genre-template").html();
-     // var template = Handlebars.compile(source);
-     // var genere = {
-     //   genre:   DataGenres(type, singoloFilm.id)
-     // };
-     // var html = template(genere);
-     //
-     // $('.list').append(html);
 
    }
+   var api_key = '2669fd071d162f6f2bafb9c16dee98ad';
+   // var genres_name;
+   var type;
+   if (type === 'movies') {
+     var url = 'https://api.themoviedb.org/3/movie/' + id;
 
+   }else {
+     var url = 'https://api.themoviedb.org/3/tv/' + id;
+   }
  }
+ //  // Inizio funzione per recuperare e stampare i Genres
+
+ // function printGenres( valInput, movie, type){
+ //   for (var i = 0; i < movie.length; i++) {
+ //     var singoloFilm = movie[i];
+ //     var id = singoloFilm.id;
+ //     console.log(singoloFilm);
+ //   var api_key = '2669fd071d162f6f2bafb9c16dee98ad';
+ //   // var genres_name;
+ //   var type;
+ //   if (type === 'movies') {
+ //     var url = 'https://api.themoviedb.org/3/movie/' + id;
+ //
+ //   }else {
+ //     var url = 'https://api.themoviedb.org/3/tv/' + id;
+ //   }
+ //   $.ajax(
+ //     {
+ //       url: url,
+ //       method: 'GET',
+ //       data: {
+ //         api_key: api_key,
+ //         query: valInput,
+ //       },
+ //       success: function(resdata){
+ //         var gender = resdata.genres;
+ //         console.log(gender);
+ //
+ //         var listaGen = '';
+ //         for (var i = 0; i < gender.length; i++) {
+ //
+ //           var filmGenres = gender[i].name;
+ //
+ //           listaGen += filmGenres;
+ //
+ //           if (i !== gender.length -1) {
+ //             listaGen += ', ';
+ //           }
+ //         }
+ //         var source = $("#genre-template").html();
+ //         var template = Handlebars.compile(source);
+ //         var context = {
+ //           genre: listaGen
+ //          };
+ //         var html = template(context);
+ //         $('.list').append(html);
+ //
+ //       },
+ //       error: function(){
+ //         alert( 'error');
+ //       }
+ //     }
+ //   );
+ //  }
+ // }
+ //Fine Genres
+
+
  //Funzione di inserimento path img
 // Come argomento accetta la chiave relativa al poster_path
 // se è vuota restituisce l'immagine relativa al film o serie tv
@@ -238,7 +228,7 @@ function DataGenres (type, id){
     }
     return stars;
   }
-  // Ho assegnato alle img delle bandiere lo stesso nome del codice language ritornata dalla chiamata ajax
+  // Ho assegnato alle img delle bandiere dello stesso nome del codice language ritornate dalla chiamata ajax
   // faccio un controllo se all'interno della lista  delle bandiere è contenuto il codice language
   // se c'è corrispondenza ritorna l'img della bandierina
   // altrimenti ritorna il codice lingua come testo
