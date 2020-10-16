@@ -102,13 +102,18 @@ li {
 /* FINE ERROR MESSAGE */
 
 /* MAIN */
+main {
+  overflow: scroll;
+  height: 100%;
+  height: calc(100vh - 100px);
+  width: 100%;
+}
 .movies-list {
   height: calc(100vh - 100px);
   display: flex;
   width: 1200px;
   flex-wrap: wrap;
   padding: 10px;
-  overflow-x: auto;
   justify-content: flex-start;
   margin: auto;
 }
