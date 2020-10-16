@@ -1,11 +1,13 @@
 $(document).ready(function(){
   //chiave API
 //2669fd071d162f6f2bafb9c16dee98ad
+
 var urlImg = 'https://image.tmdb.org/t/p/';
 var posterSize = 'w342';
 
   $('.search-ico').click(function(){
     reset();
+
    var movieSearch = $('#search').val();
 
     $('.sfondo').addClass('active');
@@ -13,8 +15,23 @@ var posterSize = 'w342';
    // searchSeries(movieSearch);
   searchData(movieSearch, 'movies');
   searchData(movieSearch, 'tv');
+  $('#search').val('');
+  });
+  $('#search').keypress(function (event){
 
-    });
+    var movieSearch = $('#search').val();
+    if (movieSearch.length !==0) {
+      if ( event.which === 13 || event.keyCode === 13 ) {
+        $('.sfondo').addClass('active');
+        $('.logo').addClass('visible');
+       // searchSeries(movieSearch);
+      searchData(movieSearch, 'movies');
+      searchData(movieSearch, 'tv');
+      $('#search').val('');
+      }
+    }
+
+  });
 
 
 // Attraverso la chiamata ajax cerca nel database il film corrispondente al valore
