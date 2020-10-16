@@ -7,9 +7,12 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 li {
-  line-height: 25px;
+  line-height: 23px;
   list-style-type: none;
-  font-size: 15px;
+  font-size: 12px;
+}
+h2 {
+  font-size: 20px;
 }
 .container {
   width: 100%;
@@ -156,11 +159,15 @@ main {
 }
 .back-card li{
   /* font-size: 12px; */
-  overflow: hidden;
+  /* overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-}
+  white-space: nowrap; */
 
+}
+.back-card li.overview{
+  overflow: scroll;
+    height: 180px;
+}
 .front-card img {
   width: 100%;
   height: 100%;
